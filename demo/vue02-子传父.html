@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+</head>
+<body>
+<div id="app">
+    <cpn @itemclick="cpnClick"></cpn>
+</div>
+<template id="cpn">
+    <div>
+        <button v-for="item in catalogs" @click="btnClick(item)">{{item.name}}</button>
+    </div>
+</template>
+<script>
+    //1.子组件
+    const cpn = {
+        template:'#cpn',
+        data(){
+            return{
+                catalogs:[
+                    {id:'1',name:'热门推荐'},
+                    {id:'2',name:'手机数码'},
+                    {id:'3',name:'家用家电'},
+                    {id:'4',name:'电脑办公'}
+                ]
+            }
+        },
+        methods:{
+            btnClick(item){
+                //将子组件的值传递到父组件，自定义事件名+参数
+                this.$emit('itemclick',item);
+            }
+        }
+    }
+    Vue.component();
+    new Vue({
+        el: '#app',
+        data: {
+        },
+        components:{
+            cpn:cpn
+        },
+        methods:{
+            cpnClick(item){//可直接使用子组件传过来的参数
+                console.log(item);
+            }
+        }
+    })
+</script>
+</body>
+</html>
